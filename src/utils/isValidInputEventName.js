@@ -10,8 +10,8 @@ const VALID_EVENTS = [
 ];
 
 export default function isValidInputEventName(eventName) {
-  if(!eventName) return false;
+  if(!eventName || typeof eventName !== 'string') return false;
 
-  let eventNameSanitized = eventName.toLowerCase().trim();
+  const eventNameSanitized = eventName.toLowerCase().trim();
   return VALID_EVENTS.includes(eventNameSanitized);
 }

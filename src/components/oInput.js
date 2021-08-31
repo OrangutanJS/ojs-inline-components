@@ -29,136 +29,11 @@ oInput.prototype.attr = function(attrs) {
   return this;
 }
 
-oInput.prototype.type = function(type) {
-  this.element.attr({
-    type
-  });
-
-  return this;
-}
-
-oInput.prototype.name = function(name) {
-  if(typeof name === 'undefined') return this;//nie wiem czy sprawdzać też pusty string + inne walidacje
-  this.element.attr({
-    name
-  });
-  return this;
-}
-
-oInput.prototype.required = function(required) {
-  if(typeof required !== 'boolean') return this;
-
-  this.element.attr({
-    required
-  });
-  return this;
-}
-
-oInput.prototype.disabled = function(required) {
-  if(typeof disabled !== 'boolean') return this;
-
-  this.element.attr({
-    disabled
-  });
-  return this;
-}
-
-oInput.prototype.readOnly = function(readonly) {
-  if(typeof readonly !== 'boolean') return this;
-
-  this.element.attr({
-    readonly
-  });
-  return this;
-}
-
-oInput.prototype.id = function (id) {
-  if(typeof id === 'undefined') return this;//nie wiem czy sprawdzać też pusty string + inne walidacje
-
-  this.element.id(id);
-  return this;
-}
-
-oInput.prototype.onChange = function(event) {
-  if(typeof event !== 'function') return this;
-
-  this.element.event({
-    name: 'change',
-    fn: e => event(e, this)
-  });
-  return this;
-}
-
-oInput.prototype.onKeyUp = function(event) {
-  if(typeof event !== 'function') return this;
-
-  this.element.event({
-    name: 'keyup',
-    fn: e => event(e, this)
-  });
-  return this;
-}
-
-oInput.prototype.onKeyDown = function(event) {
-  if(typeof event !== 'function') return this;
-
-  this.element.event({
-    name: 'keydown',
-    fn: e => event(e, this)
-  });
-  return this;
-}
-
-oInput.prototype.onFocus = function(event) {
-  if(typeof event !== 'function') return this;
-
-  this.element.event({
-    name: 'focusin',
-    fn: e => event(e, this)
-  });
-  return this;
-}
-
-oInput.prototype.onFocusOut = function(event) {
-  if(typeof event !== 'function') return this;
-
-  this.element.event({
-    name: 'focusout',
-    fn: e => event(e, this)
-  });
-  return this;
-}
-
-oInput.prototype.value = function(value) {
-  this.element.setValue(value);
-  return this;
-}
-
-oInput.prototype.getValue = function() {
-  return this.input.value;
-}
-oInput.prototype.placeholder = function(placeholder) {
-  this.element.attr({
-    placeholder
-  });
-  return this;
-}
-
 oInput.prototype.classList = function(classList) {
   this.element.classList(classList);
   return this;
 }
 
-oInput.prototype.index = function(index) {
-  this.index = index;
-  return this;
-}
-
-oInput.prototype.init = function() {
-  return this.element.init();
-}
-
-//TODO: 2) e.target.value of type number
 oInput.prototype.db = function (db, name, updateOn = 'change') {
   if(!isValidInputEventName(updateOn)) {
     updateOn = 'change';
@@ -186,18 +61,30 @@ oInput.prototype.db = function (db, name, updateOn = 'change') {
   return this;
 }
 
-//TODO: newValue validation (?)
-oInput.prototype.formatter = function(formatterFunction, formatOn = 'keyup') {
+oInput.prototype.dbIndex = function(index) {
+  this.index = index;
+  return this;
+}
+
+oInput.prototype.disabled = function(required) {
+  if(typeof disabled !== 'boolean') return this;
+
+  this.element.attr({
+    disabled
+  });
+  return this;
+}
+
+oInput.prototype.formatter = function(formatterFunction, formatOnEvent) {
   if(typeof formatterFunction !== 'function') return this;
-  if(!isValidInputEventName(formatOn)) {
-    formatOn = 'keyup';
-  }
+
+  const formatOnEventValidated = isValidInputEventName(formatOnEvent) ? formatOnEvent : 'keyup';
 
   this.element.event({
-    name: formatOn,
+    name: formatOnEventValidated,
     fn: e => {
       const formattedValue = formatterFunction(e, this);
-      this.input.value = formattedValue;
+      this.textarea.value = formattedValue;
       if(this.dbSet) {
         updateComponentDb(
           this.dbObject,
@@ -211,6 +98,79 @@ oInput.prototype.formatter = function(formatterFunction, formatOn = 'keyup') {
   return this;
 }
 
+oInput.prototype.getValue = function() {
+  return this.input.value;
+}
+
+oInput.prototype.id = function (id) {
+  if(typeof id === 'undefined') return this;//nie wiem czy sprawdzać też pusty string + inne walidacje
+
+  this.element.id(id);
+  return this;
+}
+
+oInput.prototype.init = function() {
+  return this.element.init();
+}
+
+oInput.prototype.name = function(name) {
+  if(typeof name !== 'string') return this;
+  this.element.attr({
+    name
+  });
+  return this;
+}
+
+oInput.prototype.onChange = function(event) {
+  if(typeof event !== 'function') return this;
+
+  this.element.event({
+    name: 'change',
+    fn: e => event(e, this)
+  });
+  return this;
+}
+
+oInput.prototype.onFocus = function(event) {
+  if(typeof event !== 'function') return this;
+
+  this.element.event({
+    name: 'focusin',
+    fn: e => event(e, this)
+  });
+  return this;
+}
+
+oInput.prototype.onFocusOut = function(event) {
+  if(typeof event !== 'function') return this;
+
+  this.element.event({
+    name: 'focusout',
+    fn: e => event(e, this)
+  });
+  return this;
+}
+
+oInput.prototype.onKeyUp = function(event) {
+  if(typeof event !== 'function') return this;
+
+  this.element.event({
+    name: 'keyup',
+    fn: e => event(e, this)
+  });
+  return this;
+}
+
+oInput.prototype.onKeyDown = function(event) {
+  if(typeof event !== 'function') return this;
+
+  this.element.event({
+    name: 'keydown',
+    fn: e => event(e, this)
+  });
+  return this;
+}
+
 oInput.prototype.pattern = function (pattern) {
   if(typeof pattern !== 'string') return this;
 
@@ -219,6 +179,45 @@ oInput.prototype.pattern = function (pattern) {
   });
   return this;
 }
+
+oInput.prototype.placeholder = function(placeholder) {
+  this.element.attr({
+    placeholder
+  });
+  return this;
+}
+
+oInput.prototype.readOnly = function(readonly) {
+  if(typeof readonly !== 'boolean') return this;
+
+  this.element.attr({
+    readonly
+  });
+  return this;
+}
+
+oInput.prototype.required = function(required) {
+  if(typeof required !== 'boolean') return this;
+
+  this.element.attr({
+    required
+  });
+  return this;
+}
+
+oInput.prototype.type = function(type) {
+  this.element.attr({
+    type
+  });
+
+  return this;
+}
+
+oInput.prototype.value = function(value) {
+  this.element.setValue(value);
+  return this;
+}
+
 
 //methods ideas
 oInput.prototype.validator = () => {}
