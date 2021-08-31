@@ -2,9 +2,9 @@ import o from 'ojs-core';
 import isValidInputEventName from '../utils/isValidInputEventName';
 import updateComponentDb from "../utils/updateComponentDb";
 
-export default function oTextarea(typeOrConfig) {
+export default function oTextarea(config) {
   if (!(this instanceof oTextarea)) {
-    return new oTextarea(typeOrConfig);
+    return new oTextarea(config);
   }
 
   this.element = o('textarea');
@@ -14,13 +14,9 @@ export default function oTextarea(typeOrConfig) {
   this.dbKey = null;
   this.index = null;
 
-  if(typeof typeOrConfig === 'string') {
-    this.type(typeOrConfig);
-  }
-
   //TODO: initConfigService
-  if(typeof typeOrConfig === 'object') {
-    // this.attr(typeOrConfig);
+  if(typeof config === 'object') {
+    //
   }
 }
 
