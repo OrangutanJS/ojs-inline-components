@@ -1,7 +1,9 @@
 import oInput from './components/oInput';
+import oTextarea from "./components/oTextarea";
 
 export default {
-  oInput
+  oInput,
+  oTextarea
 }
 
 
