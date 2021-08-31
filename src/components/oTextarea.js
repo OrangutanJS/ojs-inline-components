@@ -67,7 +67,7 @@ oTextarea.prototype.db = function (db, name, updateOn = 'change') {
 }
 
 oTextarea.prototype.disabled = function(required) {
-  if(typeof disabled !== 'boolean') return this;
+  if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
     disabled
@@ -193,7 +193,7 @@ oTextarea.prototype.placeholder = function(placeholder) {
 }
 
 oTextarea.prototype.readOnly = function(readonly) {
-  if(typeof readonly !== 'boolean') return this;
+  if(readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
 
   this.element.attr({
     readonly
@@ -202,7 +202,7 @@ oTextarea.prototype.readOnly = function(readonly) {
 }
 
 oTextarea.prototype.required = function(required) {
-  if(typeof required !== 'boolean') return this;
+  if(required !== 'true' && required !== 'false' && typeof required !== 'boolean') return this;
 
   this.element.attr({
     required
