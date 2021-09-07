@@ -84,6 +84,13 @@ oInput.prototype.disabled = function(required) {
   return this;
 }
 
+oInput.prototype.event = function(eventObject) {
+  if(typeof eventObject !== 'object') return this;
+
+  this.element.event(eventObject);
+  return this;
+}
+
 oInput.prototype.formatter = function(formatterFunction, formatOnEvent) {
   if(typeof formatterFunction !== 'function') return this;
 
