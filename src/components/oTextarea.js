@@ -75,6 +75,13 @@ oTextarea.prototype.disabled = function(required) {
   return this;
 }
 
+oTextarea.prototype.event = function(eventObject) {
+  if(typeof eventObject !== 'object') return this;
+
+  this.element.event(eventObject);
+  return this;
+}
+
 oTextarea.prototype.formatter = function(formatterFunction, formatOnEvent) {
   if(typeof formatterFunction !== 'function') return this;
 
