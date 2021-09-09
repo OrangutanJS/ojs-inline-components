@@ -1,7 +1,7 @@
 {
   "name": "ojs-inline-components",
-  "version": "1.4.0",
-  "description": "small components for orangutanJS library",
+  "version": "1.5.0",
+  "description": "OrangutanJS - small inline components",
   "main": "src/index.js",
   "scripts": {
     "start": "webpack --config ./webpack-config/webpack.config.js && webpack serve --config ./webpack-config/webpack.config.js",
@@ -23,7 +23,7 @@
     "oInput",
     "oButton"
   ],
-  "author": "Kacper Stodolak",
+  "author": "Kacper Stodolak (kstodolak)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/OrangutanJS/ojs-inline-components/issues"
