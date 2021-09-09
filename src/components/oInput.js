@@ -119,7 +119,7 @@ oInput.prototype.getValue = function() {
 }
 
 oInput.prototype.id = function (id) {
-  if(typeof id === 'undefined') return this;//nie wiem czy sprawdzać też pusty string + inne walidacje
+  if(typeof id === 'undefined' || id === null) return this;
 
   this.element.id(id);
   return this;
