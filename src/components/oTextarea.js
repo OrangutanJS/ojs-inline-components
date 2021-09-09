@@ -2,48 +2,44 @@ import o from 'ojs-core';
 import isValidInputEventName from '../utils/isValidInputEventName';
 import updateComponentDb from "../utils/updateComponentDb";
 
-export default function oInput(typeOrConfig) {
-  if (!(this instanceof oInput)) {
-    return new oInput(typeOrConfig);
+export default function oTextarea(config) {
+  if (!(this instanceof oTextarea)) {
+    return new oTextarea(config);
   }
 
-  this.element = o('input');
-  this.input = this.element.element;
+  this.element = o('textarea');
+  this.textarea = this.element.element;
   this.dbSet = false;
   this.dbObject = null;
   this.dbKey = null;
   this.index = null;
 
-  if(typeof typeOrConfig === 'string') {
-    this.type(typeOrConfig);
-  }
-
   //TODO: initConfigService
-  if(typeof typeOrConfig === 'object') {
-    // this.attr(typeOrConfig);
+  if(typeof config === 'object') {
+    //
   }
 }
 
-oInput.prototype.attr = function(attrs) {
+oTextarea.prototype.attr = function(attrs) {
   this.element.attr(attrs);
   return this;
 }
 
-oInput.prototype.checked = function (checked) {
-  if(checked !== 'true' && checked !== 'false' && typeof checked !== "boolean") return this;
-
-  this.element.attr({
-    checked
-  });
-  return this;
-}
-
-oInput.prototype.classList = function(classList) {
+oTextarea.prototype.classList = function(classList) {
   this.element.classList(classList);
   return this;
 }
 
-oInput.prototype.db = function (db, name, updateOn = 'change') {
+oTextarea.prototype.cols = function(cols) {
+  if(isNaN(cols)) return this;
+
+  this.element.attr({
+    cols
+  });
+  return this;
+}
+
+oTextarea.prototype.db = function (db, name, updateOn = 'change') {
   if(!isValidInputEventName(updateOn)) {
     updateOn = 'change';
   }
@@ -66,16 +62,11 @@ oInput.prototype.db = function (db, name, updateOn = 'change') {
     }
   });
 
-  this.input.value = this.index ? db[this.index][name] : db[name];
+  this.textarea.value = this.index ? db[this.index][name] : db[name];
   return this;
 }
 
-oInput.prototype.dbIndex = function(index) {
-  this.index = index;
-  return this;
-}
-
-oInput.prototype.disabled = function(disabled) {
+oTextarea.prototype.disabled = function(disabled) {
   if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
@@ -84,14 +75,14 @@ oInput.prototype.disabled = function(disabled) {
   return this;
 }
 
-oInput.prototype.event = function(eventObject) {
+oTextarea.prototype.event = function(eventObject) {
   if(typeof eventObject !== 'object') return this;
 
   this.element.event(eventObject);
   return this;
 }
 
-oInput.prototype.formatter = function(formatterFunction, formatOnEvent) {
+oTextarea.prototype.formatter = function(formatterFunction, formatOnEvent) {
   if(typeof formatterFunction !== 'function') return this;
 
   const formatOnEventValidated = isValidInputEventName(formatOnEvent) ? formatOnEvent : 'keyup';
@@ -114,44 +105,36 @@ oInput.prototype.formatter = function(formatterFunction, formatOnEvent) {
   return this;
 }
 
-oInput.prototype.getValue = function() {
-  return this.input.value;
+oTextarea.prototype.getValue = function() {
+  return this.textarea.value;
 }
 
-oInput.prototype.id = function (id) {
+oTextarea.prototype.id = function (id) {
   if(typeof id === 'undefined' || typeof id === 'object') return this;
 
   this.element.id(id);
   return this;
 }
 
-oInput.prototype.init = function() {
-  return this.element.init();
-}
-
-oInput.prototype.max = function (max) {
-  this.element.attr({
-    max
-  });
+oTextarea.prototype.index = function(index) {
+  this.index = index;
   return this;
 }
 
-oInput.prototype.maxLength = function (maxLength) {
+oTextarea.prototype.init = function() {
+  return this.element.init();
+}
+
+oTextarea.prototype.maxLength = function (maxLength) {
   if(isNaN(maxLength)) return this;
+
   this.element.attr({
     maxLength
   });
   return this;
 }
 
-oInput.prototype.min = function (min) {
-  this.element.attr({
-    min
-  });
-  return this;
-}
-
-oInput.prototype.name = function(name) {
+oTextarea.prototype.name = function(name) {
   if(typeof name !== 'string') return this;
   this.element.attr({
     name
@@ -159,7 +142,7 @@ oInput.prototype.name = function(name) {
   return this;
 }
 
-oInput.prototype.onChange = function(event) {
+oTextarea.prototype.onChange = function(event) {
   if(typeof event !== 'function') return this;
 
   this.element.event({
@@ -169,7 +152,7 @@ oInput.prototype.onChange = function(event) {
   return this;
 }
 
-oInput.prototype.onFocus = function(event) {
+oTextarea.prototype.onFocus = function(event) {
   if(typeof event !== 'function') return this;
 
   this.element.event({
@@ -179,7 +162,7 @@ oInput.prototype.onFocus = function(event) {
   return this;
 }
 
-oInput.prototype.onFocusOut = function(event) {
+oTextarea.prototype.onFocusOut = function(event) {
   if(typeof event !== 'function') return this;
 
   this.element.event({
@@ -189,7 +172,7 @@ oInput.prototype.onFocusOut = function(event) {
   return this;
 }
 
-oInput.prototype.onKeyUp = function(event) {
+oTextarea.prototype.onKeyUp = function(event) {
   if(typeof event !== 'function') return this;
 
   this.element.event({
@@ -199,7 +182,7 @@ oInput.prototype.onKeyUp = function(event) {
   return this;
 }
 
-oInput.prototype.onKeyDown = function(event) {
+oTextarea.prototype.onKeyDown = function(event) {
   if(typeof event !== 'function') return this;
 
   this.element.event({
@@ -209,23 +192,14 @@ oInput.prototype.onKeyDown = function(event) {
   return this;
 }
 
-oInput.prototype.pattern = function (pattern) {
-  if(typeof pattern !== 'string') return this;
-
-  this.element.attr({
-    pattern
-  });
-  return this;
-}
-
-oInput.prototype.placeholder = function(placeholder) {
+oTextarea.prototype.placeholder = function(placeholder) {
   this.element.attr({
     placeholder
   });
   return this;
 }
 
-oInput.prototype.readonly = function(readonly) {
+oTextarea.prototype.readonly = function(readonly) {
   if(readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
 
   this.element.attr({
@@ -234,7 +208,7 @@ oInput.prototype.readonly = function(readonly) {
   return this;
 }
 
-oInput.prototype.required = function(required) {
+oTextarea.prototype.required = function(required) {
   if(required !== 'true' && required !== 'false' && typeof required !== 'boolean') return this;
 
   this.element.attr({
@@ -243,31 +217,34 @@ oInput.prototype.required = function(required) {
   return this;
 }
 
-oInput.prototype.step = function(step) {
-  if(step !== 'any' && isNaN(step)) return this;
+oTextarea.prototype.rows = function(rows) {
+  if(isNaN(rows)) return this;
 
   this.element.attr({
-    step
+    rows
   });
   return this;
 }
 
-oInput.prototype.type = function(type) {
-  this.element.attr({
-    type
-  });
-
-  return this;
-}
-
-oInput.prototype.value = function(value) {
+oTextarea.prototype.value = function(value) {
   this.element.setValue(value);
   return this;
 }
 
+oTextarea.prototype.wrap = function(wrap = 'soft') {
+  if(typeof wrap !== 'string') return this;
+
+  const wrapFormatted = wrap.toLowerCase();
+  if(wrapFormatted !== 'soft' && wrapFormatted !== 'hard') return this;
+
+  this.element.attr({
+    wrap: wrapFormatted
+  });
+  return this;
+}
 
 //methods ideas
-oInput.prototype.validator = () => {}
+oTextarea.prototype.validator = () => {}
 
 //ideas
 
