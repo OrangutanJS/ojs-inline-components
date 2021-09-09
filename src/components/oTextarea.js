@@ -110,7 +110,7 @@ oTextarea.prototype.getValue = function() {
 }
 
 oTextarea.prototype.id = function (id) {
-  if(typeof id === 'undefined' || id === null) return this;
+  if(typeof id === 'undefined' || typeof id === 'object') return this;
 
   this.element.id(id);
   return this;
