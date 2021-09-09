@@ -1,22 +1,22 @@
 import o from "ojs-core";
-import oInput from "./oInput";
-import oTextarea from "./oTextarea";
 
 //NOTE: config jak teraz czy jednak tak jak w inpucie?
-export default function oButton(config) {
+export default function oButton(typeOrConfig) {
   if (!(this instanceof oButton)) {
-    return new oButton(config);
+    return new oButton(typeOrConfig);
   }
 
   this.element = o('button');
   this.button = this.element.element;
 
-  if(typeof config === 'string') {
-    this.type(config);
+  if(typeof typeOrConfig === 'string') {
+    this.type(typeOrConfig);
+  } else {
+    this.type('button');
   }
 
   //TODO: initConfigService
-  if(typeof config === 'object') {
+  if(typeof typeOrConfig === 'object') {
     //
   }
 }
@@ -32,7 +32,7 @@ oButton.prototype.classList = function(classList) {
 }
 
 
-oButton.prototype.disabled = function(required) {
+oButton.prototype.disabled = function(disabled) {
   if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
@@ -49,7 +49,7 @@ oButton.prototype.event = function(eventObject) {
 }
 
 oButton.prototype.id = function (id) {
-  if(typeof id === 'undefined') return this;//nie wiem czy sprawdzać też pusty string + inne walidacje
+  if(typeof id === 'undefined' || typeof id === 'object') return this;
 
   this.element.id(id);
   return this;
