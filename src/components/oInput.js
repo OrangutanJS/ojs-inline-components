@@ -75,7 +75,7 @@ oInput.prototype.dbIndex = function(index) {
   return this;
 }
 
-oInput.prototype.disabled = function(required) {
+oInput.prototype.disabled = function(disabled) {
   if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
