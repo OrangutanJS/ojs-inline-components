@@ -66,7 +66,7 @@ oTextarea.prototype.db = function (db, name, updateOn = 'change') {
   return this;
 }
 
-oTextarea.prototype.disabled = function(required) {
+oTextarea.prototype.disabled = function(disabled) {
   if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
@@ -110,7 +110,7 @@ oTextarea.prototype.getValue = function() {
 }
 
 oTextarea.prototype.id = function (id) {
-  if(typeof id === 'undefined') return this;//nie wiem czy sprawdzać też pusty string + inne walidacje
+  if(typeof id === 'undefined' || id === null) return this;
 
   this.element.id(id);
   return this;
@@ -199,7 +199,7 @@ oTextarea.prototype.placeholder = function(placeholder) {
   return this;
 }
 
-oTextarea.prototype.readOnly = function(readonly) {
+oTextarea.prototype.readonly = function(readonly) {
   if(readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
 
   this.element.attr({
@@ -232,10 +232,13 @@ oTextarea.prototype.value = function(value) {
 }
 
 oTextarea.prototype.wrap = function(wrap = 'soft') {
-  if(wrap !== 'soft' && wrap !== 'hard') return this;
+  if(typeof wrap !== 'string') return this;
+
+  const wrapFormatted = wrap.toLowerCase();
+  if(wrapFormatted !== 'soft' && wrapFormatted !== 'hard') return this;
 
   this.element.attr({
-    wrap
+    wrap: wrapFormatted
   });
   return this;
 }
