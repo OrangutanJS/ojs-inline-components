@@ -225,7 +225,7 @@ oInput.prototype.placeholder = function(placeholder) {
   return this;
 }
 
-oInput.prototype.readOnly = function(readonly) {
+oInput.prototype.readonly = function(readonly) {
   if(readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
 
   this.element.attr({
