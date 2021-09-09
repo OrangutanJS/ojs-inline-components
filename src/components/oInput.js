@@ -29,6 +29,15 @@ oInput.prototype.attr = function(attrs) {
   return this;
 }
 
+oInput.prototype.checked = function (checked) {
+  if(checked !== 'true' && checked !== 'false' && typeof checked !== "boolean") return this;
+
+  this.element.attr({
+    checked
+  });
+  return this;
+}
+
 oInput.prototype.classList = function(classList) {
   this.element.classList(classList);
   return this;
@@ -66,12 +75,19 @@ oInput.prototype.dbIndex = function(index) {
   return this;
 }
 
-oInput.prototype.disabled = function(required) {
-  if(typeof disabled !== 'boolean') return this;
+oInput.prototype.disabled = function(disabled) {
+  if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
     disabled
   });
+  return this;
+}
+
+oInput.prototype.event = function(eventObject) {
+  if(typeof eventObject !== 'object') return this;
+
+  this.element.event(eventObject);
   return this;
 }
 
@@ -103,7 +119,7 @@ oInput.prototype.getValue = function() {
 }
 
 oInput.prototype.id = function (id) {
-  if(typeof id === 'undefined') return this;//nie wiem czy sprawdzać też pusty string + inne walidacje
+  if(typeof id === 'undefined' || typeof id === 'object') return this;
 
   this.element.id(id);
   return this;
@@ -111,6 +127,28 @@ oInput.prototype.id = function (id) {
 
 oInput.prototype.init = function() {
   return this.element.init();
+}
+
+oInput.prototype.max = function (max) {
+  this.element.attr({
+    max
+  });
+  return this;
+}
+
+oInput.prototype.maxLength = function (maxLength) {
+  if(isNaN(maxLength)) return this;
+  this.element.attr({
+    maxLength
+  });
+  return this;
+}
+
+oInput.prototype.min = function (min) {
+  this.element.attr({
+    min
+  });
+  return this;
 }
 
 oInput.prototype.name = function(name) {
@@ -187,8 +225,8 @@ oInput.prototype.placeholder = function(placeholder) {
   return this;
 }
 
-oInput.prototype.readOnly = function(readonly) {
-  if(typeof readonly !== 'boolean') return this;
+oInput.prototype.readonly = function(readonly) {
+  if(readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
 
   this.element.attr({
     readonly
@@ -197,10 +235,19 @@ oInput.prototype.readOnly = function(readonly) {
 }
 
 oInput.prototype.required = function(required) {
-  if(typeof required !== 'boolean') return this;
+  if(required !== 'true' && required !== 'false' && typeof required !== 'boolean') return this;
 
   this.element.attr({
     required
+  });
+  return this;
+}
+
+oInput.prototype.step = function(step) {
+  if(step !== 'any' && isNaN(step)) return this;
+
+  this.element.attr({
+    step
   });
   return this;
 }
