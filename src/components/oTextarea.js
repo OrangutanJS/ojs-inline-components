@@ -1,4 +1,5 @@
 import o from 'ojs-core';
+import initialConfigService from '../utils/initialConfigService';
 import isValidInputEventName from '../utils/isValidInputEventName';
 import updateComponentDb from "../utils/updateComponentDb";
 
@@ -14,24 +15,23 @@ export default function oTextarea(config) {
   this.dbKey = null;
   this.index = null;
 
-  //TODO: initConfigService
-  if(typeof config === 'object') {
-    //
+  if (typeof config === 'object') {
+    initialConfigService(config, this);
   }
 }
 
-oTextarea.prototype.attr = function(attrs) {
+oTextarea.prototype.attr = function (attrs) {
   this.element.attr(attrs);
   return this;
 }
 
-oTextarea.prototype.classList = function(classList) {
+oTextarea.prototype.classList = function (classList) {
   this.element.classList(classList);
   return this;
 }
 
-oTextarea.prototype.cols = function(cols) {
-  if(isNaN(cols)) return this;
+oTextarea.prototype.cols = function (cols) {
+  if (isNaN(cols)) return this;
 
   this.element.attr({
     cols
@@ -40,11 +40,11 @@ oTextarea.prototype.cols = function(cols) {
 }
 
 oTextarea.prototype.db = function (db, name, updateOn = 'change') {
-  if(!isValidInputEventName(updateOn)) {
+  if (!isValidInputEventName(updateOn)) {
     updateOn = 'change';
   }
 
-  if(this.dbSet) return this;
+  if (this.dbSet) return this;
 
   this.dbSet = true;
   this.dbObject = db;
@@ -66,8 +66,13 @@ oTextarea.prototype.db = function (db, name, updateOn = 'change') {
   return this;
 }
 
-oTextarea.prototype.disabled = function(disabled) {
-  if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
+oTextarea.prototype.dbIndex = function (index) {
+  this.index = index;
+  return this;
+}
+
+oTextarea.prototype.disabled = function (disabled) {
+  if (disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
     disabled
@@ -75,15 +80,22 @@ oTextarea.prototype.disabled = function(disabled) {
   return this;
 }
 
-oTextarea.prototype.event = function(eventObject) {
-  if(typeof eventObject !== 'object') return this;
+oTextarea.prototype.event = function (eventObject) {
+  if (typeof eventObject !== 'object') return this;
 
   this.element.event(eventObject);
   return this;
 }
 
-oTextarea.prototype.formatter = function(formatterFunction, formatOnEvent) {
-  if(typeof formatterFunction !== 'function') return this;
+oTextarea.prototype.events = function (events) {
+  if (Array.isArray(events)) return this;
+
+  this.element.event(events);
+  return this;
+}
+
+oTextarea.prototype.formatter = function (formatterFunction, formatOnEvent) {
+  if (typeof formatterFunction !== 'function') return this;
 
   const formatOnEventValidated = isValidInputEventName(formatOnEvent) ? formatOnEvent : 'keyup';
 
@@ -92,7 +104,7 @@ oTextarea.prototype.formatter = function(formatterFunction, formatOnEvent) {
     fn: e => {
       const formattedValue = formatterFunction(e, this);
       this.textarea.value = formattedValue;
-      if(this.dbSet) {
+      if (this.dbSet) {
         updateComponentDb(
           this.dbObject,
           this.dbKey,
@@ -105,28 +117,23 @@ oTextarea.prototype.formatter = function(formatterFunction, formatOnEvent) {
   return this;
 }
 
-oTextarea.prototype.getValue = function() {
+oTextarea.prototype.getValue = function () {
   return this.textarea.value;
 }
 
 oTextarea.prototype.id = function (id) {
-  if(typeof id === 'undefined' || typeof id === 'object') return this;
+  if (typeof id === 'undefined' || typeof id === 'object') return this;
 
   this.element.id(id);
   return this;
 }
 
-oTextarea.prototype.index = function(index) {
-  this.index = index;
-  return this;
-}
-
-oTextarea.prototype.init = function() {
+oTextarea.prototype.init = function () {
   return this.element.init();
 }
 
 oTextarea.prototype.maxLength = function (maxLength) {
-  if(isNaN(maxLength)) return this;
+  if (isNaN(maxLength)) return this;
 
   this.element.attr({
     maxLength
@@ -134,16 +141,16 @@ oTextarea.prototype.maxLength = function (maxLength) {
   return this;
 }
 
-oTextarea.prototype.name = function(name) {
-  if(typeof name !== 'string') return this;
+oTextarea.prototype.name = function (name) {
+  if (typeof name !== 'string') return this;
   this.element.attr({
     name
   });
   return this;
 }
 
-oTextarea.prototype.onChange = function(event) {
-  if(typeof event !== 'function') return this;
+oTextarea.prototype.onChange = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'change',
@@ -152,8 +159,8 @@ oTextarea.prototype.onChange = function(event) {
   return this;
 }
 
-oTextarea.prototype.onFocus = function(event) {
-  if(typeof event !== 'function') return this;
+oTextarea.prototype.onFocus = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'focusin',
@@ -162,8 +169,8 @@ oTextarea.prototype.onFocus = function(event) {
   return this;
 }
 
-oTextarea.prototype.onFocusOut = function(event) {
-  if(typeof event !== 'function') return this;
+oTextarea.prototype.onFocusOut = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'focusout',
@@ -172,8 +179,8 @@ oTextarea.prototype.onFocusOut = function(event) {
   return this;
 }
 
-oTextarea.prototype.onKeyUp = function(event) {
-  if(typeof event !== 'function') return this;
+oTextarea.prototype.onKeyUp = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'keyup',
@@ -182,8 +189,8 @@ oTextarea.prototype.onKeyUp = function(event) {
   return this;
 }
 
-oTextarea.prototype.onKeyDown = function(event) {
-  if(typeof event !== 'function') return this;
+oTextarea.prototype.onKeyDown = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'keydown',
@@ -192,15 +199,15 @@ oTextarea.prototype.onKeyDown = function(event) {
   return this;
 }
 
-oTextarea.prototype.placeholder = function(placeholder) {
+oTextarea.prototype.placeholder = function (placeholder) {
   this.element.attr({
     placeholder
   });
   return this;
 }
 
-oTextarea.prototype.readonly = function(readonly) {
-  if(readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
+oTextarea.prototype.readonly = function (readonly) {
+  if (readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
 
   this.element.attr({
     readonly
@@ -208,8 +215,8 @@ oTextarea.prototype.readonly = function(readonly) {
   return this;
 }
 
-oTextarea.prototype.required = function(required) {
-  if(required !== 'true' && required !== 'false' && typeof required !== 'boolean') return this;
+oTextarea.prototype.required = function (required) {
+  if (required !== 'true' && required !== 'false' && typeof required !== 'boolean') return this;
 
   this.element.attr({
     required
@@ -217,8 +224,8 @@ oTextarea.prototype.required = function(required) {
   return this;
 }
 
-oTextarea.prototype.rows = function(rows) {
-  if(isNaN(rows)) return this;
+oTextarea.prototype.rows = function (rows) {
+  if (isNaN(rows)) return this;
 
   this.element.attr({
     rows
@@ -226,16 +233,16 @@ oTextarea.prototype.rows = function(rows) {
   return this;
 }
 
-oTextarea.prototype.value = function(value) {
+oTextarea.prototype.value = function (value) {
   this.element.setValue(value);
   return this;
 }
 
-oTextarea.prototype.wrap = function(wrap = 'soft') {
-  if(typeof wrap !== 'string') return this;
+oTextarea.prototype.wrap = function (wrap = 'soft') {
+  if (typeof wrap !== 'string') return this;
 
   const wrapFormatted = wrap.toLowerCase();
-  if(wrapFormatted !== 'soft' && wrapFormatted !== 'hard') return this;
+  if (wrapFormatted !== 'soft' && wrapFormatted !== 'hard') return this;
 
   this.element.attr({
     wrap: wrapFormatted
@@ -244,7 +251,7 @@ oTextarea.prototype.wrap = function(wrap = 'soft') {
 }
 
 //methods ideas
-oTextarea.prototype.validator = () => {}
+oTextarea.prototype.validator = () => { }
 
 //ideas
 
