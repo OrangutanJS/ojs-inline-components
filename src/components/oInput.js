@@ -1,6 +1,7 @@
 import o from 'ojs-core';
 import isValidInputEventName from '../utils/isValidInputEventName';
 import updateComponentDb from "../utils/updateComponentDb";
+import initialConfigService from "../utils/initialConfigService";
 
 export default function oInput(typeOrConfig) {
   if (!(this instanceof oInput)) {
@@ -14,23 +15,24 @@ export default function oInput(typeOrConfig) {
   this.dbKey = null;
   this.index = null;
 
-  if(typeof typeOrConfig === 'string') {
+  if (typeof typeOrConfig === 'string') {
     this.type(typeOrConfig);
   }
 
   //TODO: initConfigService
-  if(typeof typeOrConfig === 'object') {
-    // this.attr(typeOrConfig);
+  if (typeof typeOrConfig === 'object') {
+    initialConfigService(typeOrConfig, this);
   }
 }
 
-oInput.prototype.attr = function(attrs) {
+//!NOTE: if you add new method add it also to utils/initialConfigService -> METHODS_CONFIG
+oInput.prototype.attr = function (attrs) {
   this.element.attr(attrs);
   return this;
 }
 
 oInput.prototype.checked = function (checked) {
-  if(checked !== 'true' && checked !== 'false' && typeof checked !== "boolean") return this;
+  if (checked !== 'true' && checked !== 'false' && typeof checked !== "boolean") return this;
 
   this.element.attr({
     checked
@@ -38,17 +40,17 @@ oInput.prototype.checked = function (checked) {
   return this;
 }
 
-oInput.prototype.classList = function(classList) {
+oInput.prototype.classList = function (classList) {
   this.element.classList(classList);
   return this;
 }
 
 oInput.prototype.db = function (db, name, updateOn = 'change') {
-  if(!isValidInputEventName(updateOn)) {
+  if (!isValidInputEventName(updateOn)) {
     updateOn = 'change';
   }
 
-  if(this.dbSet) return this;
+  if (this.dbSet) return this;
 
   this.dbSet = true;
   this.dbObject = db;
@@ -70,13 +72,13 @@ oInput.prototype.db = function (db, name, updateOn = 'change') {
   return this;
 }
 
-oInput.prototype.dbIndex = function(index) {
+oInput.prototype.dbIndex = function (index) {
   this.index = index;
   return this;
 }
 
-oInput.prototype.disabled = function(disabled) {
-  if(disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
+oInput.prototype.disabled = function (disabled) {
+  if (disabled !== 'true' && disabled !== 'false' && typeof disabled !== 'boolean') return this;
 
   this.element.attr({
     disabled
@@ -84,15 +86,22 @@ oInput.prototype.disabled = function(disabled) {
   return this;
 }
 
-oInput.prototype.event = function(eventObject) {
-  if(typeof eventObject !== 'object') return this;
+oInput.prototype.event = function (eventObject) {
+  if (typeof eventObject !== 'object') return this;
 
   this.element.event(eventObject);
   return this;
 }
 
-oInput.prototype.formatter = function(formatterFunction, formatOnEvent) {
-  if(typeof formatterFunction !== 'function') return this;
+oInput.prototype.events = function (events) {
+  if (!Array.isArray(events)) return this;
+
+  this.element.event(events);
+  return this;
+}
+
+oInput.prototype.formatter = function (formatterFunction, formatOnEvent) {
+  if (typeof formatterFunction !== 'function') return this;
 
   const formatOnEventValidated = isValidInputEventName(formatOnEvent) ? formatOnEvent : 'keyup';
 
@@ -101,7 +110,7 @@ oInput.prototype.formatter = function(formatterFunction, formatOnEvent) {
     fn: e => {
       const formattedValue = formatterFunction(e, this);
       this.textarea.value = formattedValue;
-      if(this.dbSet) {
+      if (this.dbSet) {
         updateComponentDb(
           this.dbObject,
           this.dbKey,
@@ -114,18 +123,18 @@ oInput.prototype.formatter = function(formatterFunction, formatOnEvent) {
   return this;
 }
 
-oInput.prototype.getValue = function() {
+oInput.prototype.getValue = function () {
   return this.input.value;
 }
 
 oInput.prototype.id = function (id) {
-  if(typeof id === 'undefined' || typeof id === 'object') return this;
+  if (typeof id === 'undefined' || typeof id === 'object') return this;
 
   this.element.id(id);
   return this;
 }
 
-oInput.prototype.init = function() {
+oInput.prototype.init = function () {
   return this.element.init();
 }
 
@@ -137,7 +146,7 @@ oInput.prototype.max = function (max) {
 }
 
 oInput.prototype.maxLength = function (maxLength) {
-  if(isNaN(maxLength)) return this;
+  if (isNaN(maxLength)) return this;
   this.element.attr({
     maxLength
   });
@@ -151,16 +160,16 @@ oInput.prototype.min = function (min) {
   return this;
 }
 
-oInput.prototype.name = function(name) {
-  if(typeof name !== 'string') return this;
+oInput.prototype.name = function (name) {
+  if (typeof name !== 'string') return this;
   this.element.attr({
     name
   });
   return this;
 }
 
-oInput.prototype.onChange = function(event) {
-  if(typeof event !== 'function') return this;
+oInput.prototype.onChange = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'change',
@@ -169,8 +178,8 @@ oInput.prototype.onChange = function(event) {
   return this;
 }
 
-oInput.prototype.onFocus = function(event) {
-  if(typeof event !== 'function') return this;
+oInput.prototype.onFocus = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'focusin',
@@ -179,8 +188,8 @@ oInput.prototype.onFocus = function(event) {
   return this;
 }
 
-oInput.prototype.onFocusOut = function(event) {
-  if(typeof event !== 'function') return this;
+oInput.prototype.onFocusOut = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'focusout',
@@ -189,8 +198,8 @@ oInput.prototype.onFocusOut = function(event) {
   return this;
 }
 
-oInput.prototype.onKeyUp = function(event) {
-  if(typeof event !== 'function') return this;
+oInput.prototype.onKeyUp = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'keyup',
@@ -199,8 +208,8 @@ oInput.prototype.onKeyUp = function(event) {
   return this;
 }
 
-oInput.prototype.onKeyDown = function(event) {
-  if(typeof event !== 'function') return this;
+oInput.prototype.onKeyDown = function (event) {
+  if (typeof event !== 'function') return this;
 
   this.element.event({
     name: 'keydown',
@@ -210,7 +219,7 @@ oInput.prototype.onKeyDown = function(event) {
 }
 
 oInput.prototype.pattern = function (pattern) {
-  if(typeof pattern !== 'string') return this;
+  if (typeof pattern !== 'string') return this;
 
   this.element.attr({
     pattern
@@ -218,15 +227,15 @@ oInput.prototype.pattern = function (pattern) {
   return this;
 }
 
-oInput.prototype.placeholder = function(placeholder) {
+oInput.prototype.placeholder = function (placeholder) {
   this.element.attr({
     placeholder
   });
   return this;
 }
 
-oInput.prototype.readonly = function(readonly) {
-  if(readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
+oInput.prototype.readonly = function (readonly) {
+  if (readonly !== 'true' && readonly !== 'false' && typeof readonly !== 'boolean') return this;
 
   this.element.attr({
     readonly
@@ -234,8 +243,8 @@ oInput.prototype.readonly = function(readonly) {
   return this;
 }
 
-oInput.prototype.required = function(required) {
-  if(required !== 'true' && required !== 'false' && typeof required !== 'boolean') return this;
+oInput.prototype.required = function (required) {
+  if (required !== 'true' && required !== 'false' && typeof required !== 'boolean') return this;
 
   this.element.attr({
     required
@@ -243,8 +252,8 @@ oInput.prototype.required = function(required) {
   return this;
 }
 
-oInput.prototype.step = function(step) {
-  if(step !== 'any' && isNaN(step)) return this;
+oInput.prototype.step = function (step) {
+  if (step !== 'any' && isNaN(step)) return this;
 
   this.element.attr({
     step
@@ -252,7 +261,7 @@ oInput.prototype.step = function(step) {
   return this;
 }
 
-oInput.prototype.type = function(type) {
+oInput.prototype.type = function (type) {
   this.element.attr({
     type
   });
@@ -260,14 +269,14 @@ oInput.prototype.type = function(type) {
   return this;
 }
 
-oInput.prototype.value = function(value) {
+oInput.prototype.value = function (value) {
   this.element.setValue(value);
   return this;
 }
 
 
 //methods ideas
-oInput.prototype.validator = () => {}
+oInput.prototype.validator = () => { }
 
 //ideas
 
