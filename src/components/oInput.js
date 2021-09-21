@@ -24,6 +24,7 @@ export default function oInput(typeOrConfig) {
     initialConfigService(typeOrConfig, this);
   }
 }
+
 //!NOTE: if you add new method add it also to utils/initialConfigService -> METHODS_CONFIG
 oInput.prototype.attr = function (attrs) {
   this.element.attr(attrs);
@@ -93,7 +94,7 @@ oInput.prototype.event = function (eventObject) {
 }
 
 oInput.prototype.events = function (events) {
-  if (Array.isArray(events)) return this;
+  if (!Array.isArray(events)) return this;
 
   this.element.event(events);
   return this;

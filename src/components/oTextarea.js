@@ -20,6 +20,7 @@ export default function oTextarea(config) {
   }
 }
 
+//!NOTE: if you add new method add it also to utils/initialConfigService -> METHODS_CONFIG
 oTextarea.prototype.attr = function (attrs) {
   this.element.attr(attrs);
   return this;
@@ -88,7 +89,7 @@ oTextarea.prototype.event = function (eventObject) {
 }
 
 oTextarea.prototype.events = function (events) {
-  if (Array.isArray(events)) return this;
+  if (!Array.isArray(events)) return this;
 
   this.element.event(events);
   return this;

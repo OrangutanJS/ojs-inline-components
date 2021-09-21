@@ -20,6 +20,7 @@ export default function oButton(typeOrConfig) {
   }
 }
 
+//!NOTE: if you add new method add it also to utils/initialConfigService -> METHODS_CONFIG
 oButton.prototype.attr = function (attrs) {
   this.element.attr(attrs);
   return this;
@@ -48,7 +49,7 @@ oButton.prototype.event = function (eventObject) {
 }
 
 oButton.prototype.events = function (events) {
-  if (Array.isArray(events)) return this;
+  if (!Array.isArray(events)) return this;
 
   this.element.event(events);
   return this;
