@@ -1,4 +1,8 @@
 # OrantuganJS - oInlineComponents
+## Install using npm:
+```bash
+npm i -D ojs-inline-components
+```
 ### Set of small components which can be use in ojs-core's library syntax. Compatible also with store and oStore
 
 ### Quick start
