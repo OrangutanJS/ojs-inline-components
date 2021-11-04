@@ -1,9 +1,3 @@
-import oInput from './components/oInput';
-import oTextarea from "./components/oTextarea";
-import oButton from "./components/oButton";
-
-module.exports = {
-  oInput,
-  oTextarea,
-  oButton
-};
+export { default as oInput } from './components/oInput';
+export { default as oTextarea } from './components/oTextarea';
+export { default as oButton } from './components/oButton';
