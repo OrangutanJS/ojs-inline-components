@@ -28,8 +28,10 @@ console.log(oInputInstance.init()); // <input type="text" name="exampleName" id=
 ```
 
 Each component represents one interactive element from html and has own set of methods.
-
-# oInput
+### [#go to oInput](#oInput)
+### [#go to oButton](#oButton)
+### [#go to oTextarea](#oTextarea)
+# oInput <a name="oInput"></a>
 ## .attr() <a name="attr"></a>
 ```js
 .attr(attrs :Array<attributeType> | Object)
@@ -231,7 +233,7 @@ Type attribute value.
 ```
 Value of the input.
 
-# oButton
+# oButton <a name="oButton"></a>
 
 ## .attr() - [link](#attr)
 ## .classList() - [link](#classList)
@@ -265,7 +267,7 @@ Type attribute value.
 ## .value() 
 Equivalent of *.text()* method
 
-# oTextarea
+# oTextarea <a name="oTextarea"></a>
 ## .attr() - [link](#attr)
 ## .classList() - [link](#classList)
 ## .cols()
