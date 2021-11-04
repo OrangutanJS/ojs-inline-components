@@ -26,7 +26,7 @@ console.log(oInputInstance.init()); // <input type="text" name="exampleName" id=
 Each component reprents one interactive element from html and has own set of methods.
 
 # oInput
-## .attr()
+## .attr() <a name="attr"></a>
 ```js
 .attr(attrs :Array<attributeType> | Object)
 ```
@@ -56,7 +56,7 @@ oInputInstance.attr({
 .checked(checked :Boolean)
 ```
 Checked attribute value.
-## .classList()
+## .classList() <a name="classList"></a>
 ```js
 .classList(classList :Array<String> | String)
 ```
@@ -66,7 +66,7 @@ Add list of css classes names by HTML style (separated by space character).
 .classList('cssClass1 cssClass2');
 ```
 
-## .db()
+## .db() <a name="db"></a>
 ```js
 .db(db :Object|oStore, name :String, updateOn="change" :String)
 ```
@@ -82,19 +82,19 @@ const exampleDb = {
 oInput().db(exampleDb, 'exampleKey', 'keyUp');
 ```
 
-## .dbIndex()
+## .dbIndex() <a name="dbIndex"></a>
 ```js
 .dbIndex(index :Number)
 ```
 Index of db when db is an Array.
 
-## .disabled()
+## .disabled() <a name="disabled"></a>
 ```js
 .disabled(disabled :Boolean)
 ```
 Disabled attribute value.
 
-## .event() and .events()
+## .event() and .events() <a name="events"></a>
 ```ts
 .event(eventObject :eventType)
 .events(events :Array<eventType>)
@@ -118,7 +118,9 @@ oInput().events([{
 }]);
 ```
 
-## .formatter()
+## .getValue()
+Returns value of input.
+## .formatter() <a name="formatter"></a>
 ```ts
 .formatter(formatterFunction :Function, formatOnEvent :String)
 ```
@@ -140,13 +142,13 @@ oInput().formatter(
 ```
 Result of example above: all whitespaces would be removed from string on each keyup event trigger.
 
-## .id()
+## .id() <a name="id"></a>
 ```ts
 .id(id :String|Number)
 ```
 Id attribute value.
 
-## .init()
+## .init() <a name="init"></a>
 ```js
 oInput().init();
 ```
@@ -163,15 +165,136 @@ Max attribute value.
 .min(min :any)
 ```
 Min attribute value.
-## .maxLength()
+## .maxLength() <a name="maxLength"></a>
 ```ts
 .maxLength(maxLength :Number)
 ```
 MaxLength attribute value.
 
-## .name()
+## .name() <a name="name"></a>
 ```ts
 .name(name :String)
 ```
 Name attribute value.
 
+## .onChange() 
+```ts
+.onChange(event :Function)
+```
+Add event listener for *change* event.
+## .onFocus() .onFocusOut() .onKeyUp() .onKeyDown()
+Just like onChange method
+
+## .pattern()
+```ts
+.pattern(pattern :String)
+```
+Pattern attribute value.
+
+## .placeholder() <a name="placeholder"></a>
+```ts
+.placeholder(placeholder :any)
+```
+Set placeholder.
+
+## .readonly() <a name="readonly"></a>
+```ts
+.readonly(readonly :Boolean)
+```
+Readonly attribute value.
+
+## .required() <a name="required"></a>
+```ts
+.required(required :Boolean)
+```
+Required attribute value.
+
+## .step()
+```ts
+.step(step :Number | 'any')
+```
+Step attribute value;
+
+## .type()
+```ts
+.type(type :String)
+```
+Type attribute value.
+
+## .value() <a name="value"></a>
+```ts
+.value(value :any)
+```
+Value of the input.
+
+# oButton
+
+## .attr() - [link](#attr)
+## .classList() - [link](#classList)
+## .disabled() - - [link](#disabled)
+## .event() .events() - [link](#events)
+## .id() - [link](#id)
+## .init() - [link](#init)
+## .name() - [link](#name)
+## .onClick() .onSubmit()
+```js
+.onClick(event :Function)
+// and
+.onSubmit(event :Function)
+```
+Adds event listener to *click* or *submit* event
+```js
+oButton().onClick(() => doSomething());
+```
+## .text()
+```ts
+.text(text :String|Number)
+```
+Add text content to Button.
+
+## .type()
+```ts
+.type(type :'button' | 'submit' | 'reset')
+```
+Type attribute value.
+
+## .value() 
+Equivalent of *.text()* method
+
+# oTextarea
+## .attr() - [link](#attr)
+## .classList() - [link](#classList)
+## .cols()
+```ts
+.cols(cols :Number)
+```
+Cols attribute value.
+
+## .db() - - [link](#db)
+## .dbIndex() - - [link](#dbIndex)
+## .disabled() - - [link](#disabled)
+## .event() .events() - [link](#events)
+## .formatter() - [link](#formatter)
+## .getValue()
+Returns text content of the textarea.
+## .id() - [link](#id)
+## .init() - [link](#init)
+## .maxLength() - [link](#maxLength)
+## .name() - [link](#name)
+## .onChange() .onFocus() .onFocusOut() .onKeyUp() .onKeyDown()
+Adds event listeners to specific events.
+
+## .placeholder() - [link](#placeholder)
+## .readonly() - [link](#readonly)
+## .required() - [link](#required)
+## .rows()
+```ts
+.rows(rows :Number)
+```
+Rows attribute value.
+## .value() - [link](#value)
+## .wrap()
+```ts
+.wrap(wrap='soft' :'soft'|'hard')
+```
+Wrap attribute value.

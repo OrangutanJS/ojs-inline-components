@@ -95,12 +95,15 @@ oButton.prototype.onSubmit = function (event) {
 }
 
 oButton.prototype.text = function (text) {
+  if (typeof text === 'undefined' || typeof text === 'object') return this;
+
   this.element.text(text);
 
   return this;
 }
 
 oButton.prototype.type = function (type) {
+  if(!['button', 'submit', 'reset'].includes(type)) return this;
   this.element.attr({
     type
   });
@@ -109,6 +112,7 @@ oButton.prototype.type = function (type) {
 }
 
 oButton.prototype.value = function (value) {
+  if (typeof value === 'undefined' || typeof value === 'object') return this;
   this.element.text(value);
 
   return this;
