@@ -262,6 +262,7 @@ oInput.prototype.step = function (step) {
 }
 
 oInput.prototype.type = function (type) {
+  if (typeof type !== 'string') return this;
   this.element.attr({
     type
   });
