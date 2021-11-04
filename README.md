@@ -27,7 +27,7 @@ const oInputInstance = oInput({
 console.log(oInputInstance.init()); // <input type="text" name="exampleName" id="exampleId" />
 ```
 
-Each component reprents one interactive element from html and has own set of methods.
+Each component represents one interactive element from html and has own set of methods.
 
 # oInput
 ## .attr() <a name="attr"></a>
