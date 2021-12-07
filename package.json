@@ -1,6 +1,6 @@
 {
   "name": "ojs-inline-components",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "OrangutanJS - small inline components",
   "main": "npm/index.js",
   "source": "src/index.js",
