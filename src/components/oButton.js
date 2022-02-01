@@ -21,6 +21,11 @@ export default function oButton(typeOrConfig) {
 }
 
 //!NOTE: if you add new method add it also to utils/initialConfigService -> METHODS_CONFIG
+oButton.prototype.add = function (...children) {
+  this.element.add(...children);
+  return this;
+}
+
 oButton.prototype.attr = function (attrs) {
   this.element.attr(attrs);
   return this;
@@ -103,7 +108,7 @@ oButton.prototype.text = function (text) {
 }
 
 oButton.prototype.type = function (type) {
-  if(!['button', 'submit', 'reset'].includes(type)) return this;
+  if (!['button', 'submit', 'reset'].includes(type)) return this;
   this.element.attr({
     type
   });
